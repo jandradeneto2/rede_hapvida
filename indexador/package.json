@@ -1,0 +1,26 @@
+{
+  "name": "hapvida-indexador",
+  "version": "1.0.0",
+  "description": "Oracle extractor + Elasticsearch indexer for Hapvida rede de atendimento",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "index": "npm run build && npm start",
+    "seed": "ts-node src/seed-from-html.ts",
+    "seed:clean": "cross-env CLEAN_INDEX=true ts-node src/seed-from-html.ts"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "cross-env": "^10.1.0",
+    "dotenv": "^16.4.5",
+    "oracledb": "^6.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/oracledb": "^6.10.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
