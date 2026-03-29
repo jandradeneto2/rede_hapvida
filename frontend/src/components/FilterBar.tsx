@@ -310,8 +310,8 @@ export default function FilterBar() {
   const suggestTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const { data: opts } = useQuery({
-    queryKey: ['filter-options', filters.uf],
-    queryFn: () => fetchFilterOptions(filters.uf || undefined),
+    queryKey: ['filter-options', filters.uf, filters.operacao],
+    queryFn: () => fetchFilterOptions(filters.uf || undefined, filters.operacao || undefined),
   })
 
   function handleSelect(field: keyof typeof filters, value: string) {

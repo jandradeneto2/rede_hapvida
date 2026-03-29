@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { useFilters } from '../hooks/useFilters'
 
 const tabs = [
   { to: '/', label: '📊 Dashboard' },
@@ -33,7 +34,11 @@ const tabStyle: React.CSSProperties = {
   transition: 'all .2s',
 }
 
+const BU_OPTIONS = ['Saúde', 'Odonto'] as const
+
 export default function Nav() {
+  const { filters, setFilter } = useFilters()
+
   return (
     <nav style={navStyle}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginRight: 28 }}>
@@ -73,6 +78,34 @@ export default function Nav() {
           {tab.label}
         </NavLink>
       ))}
+
+      <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 4, background: 'rgba(0,0,0,0.2)', borderRadius: 10, padding: '3px 4px' }}>
+        {BU_OPTIONS.map((bu) => {
+          const isActive = filters.operacao === bu
+          return (
+            <button
+              key={bu}
+              onClick={() => setFilter('operacao', bu)}
+              style={{
+                padding: '5px 16px',
+                borderRadius: 7,
+                border: 'none',
+                cursor: 'pointer',
+                fontFamily: "'Nunito', sans-serif",
+                fontSize: 12,
+                fontWeight: 800,
+                letterSpacing: 0.3,
+                transition: 'all .15s',
+                background: isActive ? '#fff' : 'transparent',
+                color: isActive ? 'var(--hap-blue)' : 'rgba(255,255,255,0.65)',
+                boxShadow: isActive ? '0 1px 4px rgba(0,0,0,0.18)' : 'none',
+              }}
+            >
+              {bu}
+            </button>
+          )
+        })}
+      </div>
     </nav>
   )
 }

@@ -10,12 +10,13 @@ import type {
   RedeProdutoSearchResult,
 } from '../types';
 
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const BASE_URL = import.meta.env.VITE_API_URL ?? '/api';
 
 const api = axios.create({ baseURL: BASE_URL });
 
 function toQueryParams(filters: Partial<ActiveFilters>): Record<string, string> {
   const params: Record<string, string> = {};
+  if (filters.operacao) params.operacao = filters.operacao;
   if (filters.operadora) params.operadora = filters.operadora;
   if (filters.uf) params.uf = filters.uf;
   if (filters.cidade) params.cidade = filters.cidade;
@@ -49,10 +50,11 @@ export async function fetchPrestadores(
   return data;
 }
 
-export async function fetchFilterOptions(uf?: string): Promise<FilterOptions> {
-  const { data } = await api.get<FilterOptions>('/prestadores/filter-options', {
-    params: uf ? { uf } : {},
-  });
+export async function fetchFilterOptions(uf?: string, operacao?: string): Promise<FilterOptions> {
+  const params: Record<string, string> = {};
+  if (uf) params.uf = uf;
+  if (operacao) params.operacao = operacao;
+  const { data } = await api.get<FilterOptions>('/prestadores/filter-options', { params });
   return data;
 }
 

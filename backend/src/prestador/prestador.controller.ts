@@ -39,8 +39,11 @@ export class PrestadorController {
   }
 
   @Get('filter-options')
-  getFilterOptions(@Query('uf') uf?: string) {
-    return this.prestadorService.getFilterOptions(uf);
+  getFilterOptions(
+    @Query('uf') uf?: string,
+    @Query('operacao') operacao?: string,
+  ) {
+    return this.prestadorService.getFilterOptions(uf, operacao);
   }
 
   @Get('geo')

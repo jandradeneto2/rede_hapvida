@@ -95,6 +95,7 @@ export class PrestadorService implements OnModuleInit {
     }
 
     const termFields: [string, string | undefined][] = [
+      ['operacao.keyword', filters.operacao],
       ['operadora.keyword', filters.operadora],
       ['uf.keyword', filters.uf],
       ['cidade.keyword', filters.cidade],
@@ -268,8 +269,11 @@ export class PrestadorService implements OnModuleInit {
     return response.hits.hits.map((h) => ({ id: h._id, ...(h._source as object) }));
   }
 
-  async getFilterOptions(uf?: string) {
-    const filter = uf ? { term: { 'uf.keyword': uf } } : { match_all: {} };
+  async getFilterOptions(uf?: string, operacao?: string) {
+    const must: any[] = [];
+    if (uf) must.push({ term: { 'uf.keyword': uf } });
+    if (operacao) must.push({ term: { 'operacao.keyword': operacao } });
+    const filter = must.length > 0 ? { bool: { must } } : { match_all: {} };
 
     const response = await this.esService.search({
       index: INDEX,

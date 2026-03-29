@@ -9,6 +9,7 @@ interface FiltersContextValue {
 }
 
 const EMPTY: ActiveFilters = {
+  operacao: 'Saúde',
   operadora: '',
   uf: '',
   cidade: '',
@@ -34,7 +35,9 @@ export function FiltersProvider({ children }: { children: ReactNode }) {
     setFilters(EMPTY);
   }, []);
 
-  const activeCount = Object.values(filters).filter(Boolean).length;
+  const activeCount = Object.entries(filters)
+    .filter(([key, val]) => key !== 'operacao' && Boolean(val))
+    .length;
 
   return (
     <FiltersContext.Provider value={{ filters, setFilter, clearFilters, activeCount }}>

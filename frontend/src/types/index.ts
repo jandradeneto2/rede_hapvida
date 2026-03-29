@@ -96,6 +96,7 @@ export interface GeoResponse {
 }
 
 export interface ActiveFilters {
+  operacao: string;
   operadora: string;
   uf: string;
   cidade: string;

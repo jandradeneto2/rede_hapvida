@@ -4,6 +4,10 @@ import { IsOptional, IsString, IsInt, Min, Max } from 'class-validator';
 export class FilterPrestadoresDto {
   @IsOptional()
   @IsString()
+  operacao?: string;
+
+  @IsOptional()
+  @IsString()
   operadora?: string;
 
   @IsOptional()
